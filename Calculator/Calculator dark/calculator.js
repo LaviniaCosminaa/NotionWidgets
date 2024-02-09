@@ -1,169 +1,79 @@
 var display = document.getElementById("screen");
 var buttons = document.getElementsByClassName("button");
-  
-  Array.prototype.forEach.call(buttons, function(button) {
+
+// Add an event listener to each button
+Array.prototype.forEach.call(buttons, function(button) {
   button.addEventListener("click", function() {
-    if (button.textContent != "=" && 
-    button.textContent != "AC" && 
-    button.textContent != "*" && 
-    button.textContent != "/" && 
-    button.textContent != "√" && 
-    button.textContent != "+" && 
-    button.textContent != "%" && 
-    button.textContent != "=" && 
-    button.textContent != "-" && 
-    button.textContent != "sin" && 
-    button.textContent != "cos" && 
-    button.textContent != "tan" && 
-    button.textContent != "log" && 
-    button.textContent != "ln" && 
-    button.textContent != "x^" && 
-    button.textContent != "x!" && 
-    button.textContent != "pi" && 
-    button.textContent != "Rad" 
-    && button.textContent != "Deg") {
-      display.value += button.textContent;
+    // Check if the button's text is a valid input
+    if (isValidInput(button.textContent)) {
+      // Append the button's text to the display
+      if (display.value.length < 12) { // Limit the input length
+        display.value += button.textContent;
+        adjustFontSize(); // Adjust font size after each input
+      }
     } else if (button.textContent === "=") {
-      equals();
+      // Calculate the result
+      calculateResult();
     } else if (button.textContent === "AC") {
-      clear();
-    } else if (button.textContent === "*") {
-      multiply();
-    } else if (button.textContent === "/") {
-      divide();
-    } else if (button.textContent === "+") {
-      plus();
-      } else if (button.textContent === "-") {
-      Minus();
-    } else if (button.textContent === "%") {
-      percent();
-    } else if (button.textContent === "pi") {
-      pi();
-    } else if (button.textContent === "√") {
-      squareRoot();
-    } else if (button.textContent === "sin") {
-      sin();
-    } else if (button.textContent === "cos") {
-      cos();
-    } else if (button.textContent === "tan") {
-      tan();
-    } else if (button.textContent === "log") {
-      log();
-    } else if (button.textContent === "ln") {
-      ln();
-    } else if (button.textContent === "x^") {
-      exponent();
-    } else if (button.textContent === "x!") {
-      factorial();
-    } else if (button.textContent === "Rad") {
-      radians();
-    } else if (button.textContent === "Deg") {
-      degrees();
+      // Clear the display
+      clearDisplay();
     }
   });
 });
 
+// Function to validate input
+function isValidInput(input) {
+  // Define allowed characters
+  var allowedCharacters = "0123456789.+-*/()";
+  // Check if the input is among the allowed characters
+  return allowedCharacters.includes(input);
+}
 
-function syntaxError() {
-  if (eval(display.value) == SyntaxError || eval(display.value) == ReferenceError || eval(display.value) == TypeError) {
-    display.value == "Syntax Error";
+// Function to calculate the result
+function calculateResult() {
+  try {
+    // Use eval to evaluate the expression in the display
+    var result = eval(display.value);
+    // Update the display with the result
+    display.value = result;
+  } catch (error) {
+    // Handle errors such as division by zero or syntax errors
+    display.value = "Error";
   }
 }
 
-
-function equals() {
-  if ((display.value).indexOf("^") > -1) {
-    var base = (display.value).slice(0, (display.value).indexOf("^"));
-    var exponent = (display.value).slice((display.value).indexOf("^") + 1);
-    display.value = eval("Math.pow(" + base + "," + exponent + ")");
-  } else {
-    display.value = eval(display.value)
-    checkLength()
-    syntaxError()
-  }
-}
-
-function clear() {
+// Function to clear the display
+function clearDisplay() {
   display.value = "";
 }
 
-
-function multiply() {
-  display.value += "*";
+// Function to format the display with commas
+function formatDisplay() {
+  // Remove any non-digit characters and commas from the input
+  var sanitizedInput = display.value.replace(/[^0-9.]/g, "");
+  // Split the input into integer and decimal parts
+  var parts = sanitizedInput.split(".");
+  // Format the integer part with commas
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  // Update the display with the formatted number
+  display.value = parts.join(".");
 }
 
-function divide() {
-  display.value +=  "/";
-}
-function plus() {
-  display.value +=  "+";
+// Function to adjust font size based on input length
+function adjustFontSize() {
+  var maxLength = 12; // Maximum length of characters
+  var currentLength = display.value.length; // Current length of characters
+  var baseFontSize = 24; // Base font size
+  var scaleFactor = 3.5; // Scaling factor for font size adjustment
+  var minimumFontSize = 6; // Minimum font size
+
+  // Calculate the new font size based on the length of the input value
+  var newSize = baseFontSize + scaleFactor * (maxLength - currentLength);
+
+  // Ensure the font size doesn't become too small
+  newSize = Math.max(newSize, minimumFontSize); // Minimum font size
+
+  // Apply the new font size to the display
+  display.style.fontSize = newSize + "px";
 }
 
-function Minus() {
-  display.value +=  "-";
-}
-
-function factorial() {
-  var number = 1;
-  if (display.value === 0) {
-    display.value = "1";
-  } else if (display.value < 0) {
-    display.value = "undefined";
-  } else {
-    var number = 1;
-    for (var i = display.value; i > 0; i--) {
-      number *=  i;
-    }
-    display.value = number;
-  }
-}
-
-function pi() {
-  display.value = (display.value * Math.PI);
-}
-
-function square() {
-  display.value = eval(display.value * display.value);
-}
-
-function squareRoot() {
-  display.value = Math.sqrt(display.value);
-}
-
-function percent() {
-  display.value = display.value / 100;
-}
-
-function sin() {
-  display.value = Math.sin(display.value);
-}
-
-	
-function cos() {
-  display.value = Math.cos(display.value);
-}
-
-function tan() {
-  display.value = Math.tan(display.value);
-}
-
-function log() {
-  display.value = Math.log10(display.value);
-}
-
-function ln() {
-  display.value = Math.log(display.value);
-}
-
-function exponent() {
-  display.value += "^";
-}
-
-
-function radians() {
-  display.value = display.value * (Math.PI / 180);
-}
-
-function degrees() {
-  display.value = display.value * (180 / Math.PI);
-}
