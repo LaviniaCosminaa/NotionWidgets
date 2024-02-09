@@ -1,0 +1,138 @@
+body {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 23px;
+}
+
+.main {
+  max-width: 10%;
+}
+
+.button > .over {
+  text-decoration:overline;
+  display: inline-block;
+  position:relative;
+  top: 3px;
+  left: -4px;
+}
+
+.calculator {
+  display: inline-block;
+  background: white;
+  margin: 1% 0;
+  color: black;
+  border: 3px solid #000000;
+  border-radius: 5px;
+  box-shadow: 2px 2px 1px 0px #000000;
+  max-width: 240px;
+}
+
+.calculator .button {
+  font-size: x-large;
+  width: 2em;
+  min-height: 2em;
+  margin: 0.8%;
+  border-radius: 15%;
+  border: 0.08em solid #000;
+  font-family: monospace;
+  background: white;
+  box-shadow: 0.03em  0.03em 0.01em 0px #000000;
+}
+
+.calculator .accent{
+  background: #f3fff3;  background: #f3fff3;;
+}
+
+.calculator .space {
+  font-size: x-large;
+  width: 2.4em;
+  min-height: 2.4em;
+  margin: 0.5%;
+  border-radius: 15%;
+  border: 0.08em solid #ffffff;
+  background: white;
+}
+
+.calculator button:hover,
+#backspace:hover {
+  background: #f3fff3;
+  color:#000000;
+  transform: scale(0.9);
+  border-radius: 20%;
+}
+
+.calculator 
+#clear:hover , #rad:hover  ,#deg:hover{
+  background: rgb(0, 0, 0)!important;
+  color:#ffffff;
+  transform: scale(0.9);
+  border-radius: 20%;
+}
+
+.calculator button:focus,
+#clear:focus,
+#backspace:focus {
+  outline: none;
+}
+
+.button:active,
+.button-active {
+  background: rgb(0, 0, 0);
+  color:#ffffff;
+  transform: scale(0.8);
+}
+
+#screen{
+  border: 3px solid #000000;
+  border-radius: 5px;
+  width: 80%;
+  height: 50px;
+  margin : 5%;
+  text-align: right;
+  overflow: auto;
+  overflow-wrap: break-word;
+  font-size: 30px;
+  font-family: monospace;
+  background-color: #000;
+  color: #fff;
+}
+
+#clean {
+  background: rgb(27, 27, 27);
+  color:#ffffff;
+}
+#rad {
+  background: rgb(27, 27, 27);
+  color:#ffffff;
+}
+#deg {
+  background: rgb(27, 27, 27);
+  color:#ffffff;
+}
+
+.rows{
+  margin: 5%;
+}
+
+.calculator__row1,
+.calculator__row2,
+.calculator__row3,
+.calculator__row4,
+.calculator__row5 {
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+  font-family: monospace;
+}
+
+.calculator__row5 {
+  margin-bottom: 3%;
+} 
+
+.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
